@@ -24,26 +24,30 @@ class UserSignupPage extends Component {
 
     render() {
         return (
-            <form>
-                <h1>Sign Up</h1>
-                <div>
-                    <label htmlFor=''>Username</label>
-                    <input name='userName' onChange={this.onChangeFields} type='text'/>
-                </div>
-                <div>
-                    <label htmlFor=''>Display Name</label>
-                    <input name='displayName' onChange={this.onChangeFields} type='text'/>
-                </div>
-                <div>
-                    <label htmlFor=''>Password</label>
-                    <input name='password' onChange={this.onChangeFields} type='password'/>
-                </div>
-                <div>
-                    <label htmlFor="">Password Repeat</label>
-                    <input name='passwordRepeat' onChange={this.onChangeFields} type='password'/>
-                </div>
-                <button onClick={this.onClickSignUp} >Sign Up</button>
-            </form>
+            <div className='container'>
+                <form>
+                    <h1 className='text-center'>Sign Up</h1>
+                    <div className='form-group'>
+                        <label>Username</label>
+                        <input className='form-control' name='userName' onChange={this.onChangeFields} type='text'/>
+                    </div>
+                    <div className='form-group'>
+                        <label>Display Name</label>
+                        <input className='form-control' name='displayName' onChange={this.onChangeFields} type='text'/>
+                    </div>
+                    <div className='form-group'>
+                        <label>Password</label>
+                        <input className='form-control' name='password' onChange={this.onChangeFields} type='password'/>
+                    </div>
+                    <div className='form-group'>
+                        <label>Password Repeat</label>
+                        <input className='form-control' name='passwordRepeat' onChange={this.onChangeFields} type='password'/>
+                    </div>
+                    <div className='text-center'>
+                        <button className='btn btn-primary' onClick={this.onClickSignUp} >Sign Up</button>
+                    </div>
+                </form>
+            </div>
         );
     }
 }
