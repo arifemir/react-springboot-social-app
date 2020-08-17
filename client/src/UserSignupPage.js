@@ -19,7 +19,7 @@ class UserSignupPage extends Component {
         event.preventDefault()
         const {userName, displayName, password} = this.state
         const body = { userName, displayName, password }
-        axios.post('http://localhost:9999/api/1.0/users', body)
+        axios.post('/api/1.0/users', body)
     }
 
     render() {
