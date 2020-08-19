@@ -8,34 +8,44 @@ class UserSignupPage extends Component {
         displayName: null,
         password: null,
         passwordRepeat: null,
-        pendingApiCall: false
+        pendingApiCall: false,
+        errors: {}
     }
 
     onChangeFields = event => {
         const {value, name} = event.target
-        this.setState({[name]: value})
+        const errors = {...this.state.errors}
+        errors[name] = undefined
+        this.setState({[name]: value, errors})
     }
 
-    onClickSignUp = event => {
+    onClickSignUp = async event => {
         event.preventDefault()
         const {userName, displayName, password} = this.state
         this.setState({pendingApiCall: true})
         const body = { userName, displayName, password }
-        signup(body)
-        .then(() => this.setState({pendingApiCall: false}))
-        .catch(() => this.setState({pendingApiCall: false}))
+        
+        try {
+            const response = await signup(body);
+        } catch (error) {
+            if (error.response.data.validationErrors) {
+                this.setState({errors: error.response.data.validationErrors})
+            }
+        }
+        this.setState({pendingApiCall: false})
     }
 
     render() {
-        const {pendingApiCall} = this.state
-
+        const {pendingApiCall, errors} = this.state
+        const {userName} = errors
         return (
             <div className='container'>
                 <form>
                     <h1 className='text-center'>Sign Up</h1>
                     <div className='form-group'>
                         <label>Username</label>
-                        <input className='form-control' name='userName' onChange={this.onChangeFields} type='text'/>
+                        <input className={userName ? 'form-control is-invalid' : 'form-control'} name='userName' onChange={this.onChangeFields} type='text'/>
+                        <div className="invalid-feedback">{userName}</div>
                     </div>
                     <div className='form-group'>
                         <label>Display Name</label>
