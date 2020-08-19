@@ -37,7 +37,7 @@ class UserSignupPage extends Component {
 
     render() {
         const {pendingApiCall, errors} = this.state
-        const {userName} = errors
+        const {userName, displayName} = errors
         return (
             <div className='container'>
                 <form>
@@ -49,7 +49,8 @@ class UserSignupPage extends Component {
                     </div>
                     <div className='form-group'>
                         <label>Display Name</label>
-                        <input className='form-control' name='displayName' onChange={this.onChangeFields} type='text'/>
+                        <input className={displayName ? 'form-control is-invalid' : 'form-control'} name='displayName' onChange={this.onChangeFields} type='text'/>
+                        <div className="invalid-feedback">{displayName}</div>
                     </div>
                     <div className='form-group'>
                         <label>Password</label>
