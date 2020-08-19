@@ -7,12 +7,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.validation.FieldError;
+import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -29,23 +28,20 @@ public class UserController {
     }
 
     @PostMapping("/api/1.0/users")
-    @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<?> createUser(@Validated @RequestBody User user) {
+    public GenericResponse createUser(@Valid @RequestBody User user) {
+        userService.save(user);
+        return new GenericResponse("user created");
+    }
+
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ApiError handleValidationException(MethodArgumentNotValidException exception) {
         ApiError error = new ApiError(400, "Validation error", "api/1.0/users");
         Map<String, String> validationErrors = new HashMap<>();
-
-        String username = user.getUserName();
-        String displayName = user.getDisplayName();
-
-        if(username == null || username.isEmpty()) validationErrors.put("userName", "Username cannot be null");
-        if(displayName == null || displayName.isEmpty()) validationErrors.put("displayName", "Displayname cannot be null");
-
-        if(validationErrors.size() > 0) {
-            error.setValidationErrors(validationErrors);
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
+        for(FieldError fieldError: exception.getBindingResult().getFieldErrors()) {
+            validationErrors.put(fieldError.getField(), fieldError.getDefaultMessage());
         }
-
-        userService.save(user);
-        return ResponseEntity.ok(new GenericResponse("user created"));
+        error.setValidationErrors(validationErrors);
+        return error;
     }
 }
