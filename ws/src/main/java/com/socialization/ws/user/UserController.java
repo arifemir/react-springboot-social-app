@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -29,7 +30,7 @@ public class UserController {
 
     @PostMapping("/api/1.0/users")
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<?> createUser(@RequestBody User user) {
+    public ResponseEntity<?> createUser(@Validated @RequestBody User user) {
         ApiError error = new ApiError(400, "Validation error", "api/1.0/users");
         Map<String, String> validationErrors = new HashMap<>();
 
