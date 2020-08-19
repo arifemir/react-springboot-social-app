@@ -17,6 +17,17 @@ class UserSignupPage extends Component {
         const {value, name} = event.target
         const errors = {...this.state.errors}
         errors[name] = undefined
+
+        if (name === 'password' || name === 'passwordRepeat') {
+            if (name === 'password' && value !== this.state.passwordRepeat) {
+                errors.passwordRepeat = 'Password mismatch'
+            } else if (name === 'passwordRepeat' && value !== this.state.password) {
+                errors.passwordRepeat = 'Password mismatch'
+            } else {
+                errors.passwordRepeat = undefined
+            }
+        }
+
         this.setState({[name]: value, errors})
     }
 
@@ -38,7 +49,7 @@ class UserSignupPage extends Component {
 
     render() {
         const {pendingApiCall, errors} = this.state
-        const {userName, displayName, password} = errors
+        const {userName, displayName, password, passwordRepeat} = errors
         return (
             <div className='container'>
                 <form>
@@ -46,10 +57,10 @@ class UserSignupPage extends Component {
                     <Input label='Username' name='userName' onChangeFields={this.onChangeFields} error={userName} type='text'/>
                     <Input label='Display Name' name='displayName' onChangeFields={this.onChangeFields} error={displayName} type='text'/>
                     <Input label='Password' name='password' onChangeFields={this.onChangeFields} error={password} type='password' />
-                    <Input label='Password Repeat' name='passwordRepeat' onChangeFields={this.onChangeFields} type='password' />
+                    <Input label='Password Repeat' name='passwordRepeat' onChangeFields={this.onChangeFields} error={passwordRepeat} type='password' />
                     
                     <div className='text-center'>
-                        <button disabled={pendingApiCall} className='btn btn-primary' onClick={this.onClickSignUp} >
+                        <button disabled={pendingApiCall || passwordRepeat !== undefined} className='btn btn-primary' onClick={this.onClickSignUp} >
                         {pendingApiCall ? 
                             <span className='spinner-border spinner-border-sm'/> :
                             <span>Sign Up</span>
