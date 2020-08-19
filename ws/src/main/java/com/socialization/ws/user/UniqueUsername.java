@@ -10,7 +10,7 @@ import java.lang.annotation.*;
         validatedBy = {UniqueUserNameValidator.class}
 )
 public @interface UniqueUsername {
-    String message() default "Username must be unique";
+    String message() default "{socialization.constraint.username.UniqueUserName.message}";
 
     Class<?>[] groups() default {};
 
