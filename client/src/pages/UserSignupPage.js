@@ -38,21 +38,16 @@ class UserSignupPage extends Component {
 
     render() {
         const {pendingApiCall, errors} = this.state
-        const {userName, displayName} = errors
+        const {userName, displayName, password} = errors
         return (
             <div className='container'>
                 <form>
                     <h1 className='text-center'>Sign Up</h1>
-                    <Input label='Username' name='userName' onChangeFields={this.onChangeFields} error={userName}/>
-                    <Input label='Display Name' name='displayName' onChangeFields={this.onChangeFields} error={displayName}/>
-                    <div className='form-group'>
-                        <label>Password</label>
-                        <input className='form-control' name='password' onChange={this.onChangeFields} type='password'/>
-                    </div>
-                    <div className='form-group'>
-                        <label>Password Repeat</label>
-                        <input className='form-control' name='passwordRepeat' onChange={this.onChangeFields} type='password'/>
-                    </div>
+                    <Input label='Username' name='userName' onChangeFields={this.onChangeFields} error={userName} type='text'/>
+                    <Input label='Display Name' name='displayName' onChangeFields={this.onChangeFields} error={displayName} type='text'/>
+                    <Input label='Password' name='password' onChangeFields={this.onChangeFields} error={password} type='password' />
+                    <Input label='Password Repeat' name='passwordRepeat' onChangeFields={this.onChangeFields} type='password' />
+                    
                     <div className='text-center'>
                         <button disabled={pendingApiCall} className='btn btn-primary' onClick={this.onClickSignUp} >
                         {pendingApiCall ? 
