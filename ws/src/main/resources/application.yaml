@@ -5,4 +5,9 @@ spring:
     url: jdbc:h2:./devdb
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: create-drop
+    properties:
+      javax:
+        persistence:
+          validation:
+            mode: none
