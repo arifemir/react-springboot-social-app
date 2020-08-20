@@ -1,41 +1,42 @@
-import i18n from 'i18next'
-import {initReactI18next} from 'react-i18next'
+import i18n from "i18next";
+import { initReactI18next } from "react-i18next";
 
 i18n.use(initReactI18next).init({
   resources: {
     en: {
       translations: {
-        'Sign Up': 'Sign Up',
-        'Password mismatch': 'Password mismatch',
-        'Username': 'Username',
-        'Display name': 'Display Name',
-        'Password': 'Password',
-        'Password Repeat': 'Password Repeat'
-      }
+        "Sign Up": "Sign Up",
+        "Password mismatch": "Password mismatch",
+        Username: "Username",
+        "Display name": "Display Name",
+        Password: "Password",
+        "Password Repeat": "Password Repeat",
+        Login: "Login",
+      },
     },
     tr: {
       translations: {
-        'Sign Up': 'Kayıt Ol',
-        'Password mismatch': 'Aynı şifreyi giriniz',
-        'Username': 'Kullanıcı Adı',
-        'Display name': 'Görünen isim',
-        'Password': 'Parola',
-        'Password Repeat': 'Şifreyi Tekrarla'
-
-      }
-    }
+        "Sign Up": "Kayıt Ol",
+        "Password mismatch": "Aynı şifreyi giriniz",
+        Username: "Kullanıcı Adı",
+        "Display name": "Görünen isim",
+        Password: "Parola",
+        "Password Repeat": "Şifreyi Tekrarla",
+        Login: "Giriş",
+      },
+    },
   },
-  fallbackLng: 'tr',
-  ns: ['translations'],
-  defaultNS: 'translations',
+  fallbackLng: "tr",
+  ns: ["translations"],
+  defaultNS: "translations",
   keySeparator: false,
   interpolation: {
     escapeValue: false,
-    formatSeparator: ','
+    formatSeparator: ",",
   },
   react: {
-    wait: true
-  }
-})
+    wait: true,
+  },
+});
 
-export default i18n
+export default i18n;
